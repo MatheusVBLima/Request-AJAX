@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="titulo">Films requested by using AJAX</h1>
+    </div>
+
+    <script>
+        fetch(
+                "https://api.themoviedb.org/3/movie/popular?api_key=506fadb0256c13349acc05dabebf9604&language=en-US&page=1", {
+                    method: "GET",
+                }
+            )
+            .then((response) => response.json())
+            .then(function(json) {
+                var container = document.querySelector(".container");
+
+                json.results.map(function(val) {
+                    container.innerHTML +=
+                        `
+                
+                   <div style="cursor:pointer;" class="tituloFilme">` +
+                        val.title +
+                        `
+                    <div style="display:none;" class="description">` +
+                        val.overview +
+                        `</div>
+                    
+                
+                </div>`;
+                });
+
+                var titulos = document.querySelectorAll(".tituloFilme");
+                for (var i = 0; i < titulos.length; i++) {
+                    titulos[i].addEventListener("click", function(t) {
+                        if (
+                            t.target.querySelector(".description").style.display == "none"
+                        ) {
+                            t.target.querySelector(".description").style.display = "block";
+                        } else {
+                            t.target.querySelector(".description").style.display = "none";
+                        }
+                    });
+                }
+            });
+    </script>
+</body>
+
+</html>
